@@ -15,6 +15,7 @@ import com.sky.exception.AccountNotFoundException;
 import com.sky.exception.PasswordErrorException;
 import com.sky.mapper.EmployeeMapper;
 import com.sky.result.PageResult;
+import com.sky.result.Result;
 import com.sky.service.EmployeeService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -125,6 +126,34 @@ public class EmployeeServiceImpl implements EmployeeService {
                             .status(status)
                             .id(id)
                             .build();
+        employeeMapper.update(employee);
+    }
+
+    /**
+     * 根据ID查询员工信息
+     * @param id
+     * @return
+     */
+    @Override
+    public Employee getByID(Long id) {
+        Employee employee = employeeMapper.getById(id);
+        employee.setPassword("****");
+        return employee;
+    }
+
+    /**
+     * 编辑员工信息
+     * @param employeeDTO
+     */
+    @Override
+    public void update(EmployeeDTO employeeDTO) {
+        // 1.创建一个Employee对象
+        Employee employee = new Employee();
+        // 2.将DTO对象的属性复制到employee对象中
+        BeanUtils.copyProperties(employeeDTO, employee);
+        // 3.手动添加一些额外的属性，比如修改时间和修改用户等等
+        employee.setUpdateTime(LocalDateTime.now());
+        employee.setUpdateUser(BaseContext.getCurrentId());
         employeeMapper.update(employee);
     }
 
