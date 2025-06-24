@@ -84,13 +84,13 @@ public class EmployeeServiceImpl implements EmployeeService {
         //设置密码，默认密码：123456
         employee.setPassword(DigestUtils.md5DigestAsHex(PasswordConstant.DEFAULT_PASSWORD.getBytes()));
 
-        //设置当前记录的创建时间和修改时间
-        employee.setCreateTime(LocalDateTime.now());
-        employee.setUpdateTime(LocalDateTime.now());
-
-        //设置当前记录创建人id和修改人id
-        employee.setCreateUser(BaseContext.getCurrentId());
-        employee.setUpdateUser(BaseContext.getCurrentId());
+//        //设置当前记录的创建时间和修改时间
+//        employee.setCreateTime(LocalDateTime.now());
+//        employee.setUpdateTime(LocalDateTime.now());
+//
+//        //设置当前记录创建人id和修改人id
+//        employee.setCreateUser(BaseContext.getCurrentId());
+//        employee.setUpdateUser(BaseContext.getCurrentId());
 
         //调用DAO层
         employeeMapper.insert(employee);
@@ -149,11 +149,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     public void update(EmployeeDTO employeeDTO) {
         // 1.创建一个Employee对象
         Employee employee = new Employee();
+
         // 2.将DTO对象的属性复制到employee对象中
         BeanUtils.copyProperties(employeeDTO, employee);
-        // 3.手动添加一些额外的属性，比如修改时间和修改用户等等
-        employee.setUpdateTime(LocalDateTime.now());
-        employee.setUpdateUser(BaseContext.getCurrentId());
+
+//        // 3.手动添加一些额外的属性，比如修改时间和修改用户等等
+//        employee.setUpdateTime(LocalDateTime.now());
+//        employee.setUpdateUser(BaseContext.getCurrentId());
+
         employeeMapper.update(employee);
     }
 
